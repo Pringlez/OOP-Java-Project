@@ -2,8 +2,6 @@ package ie.gmit.sw.wordcloud;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /*
  * The ParseFile class will be responsible for parsing 
@@ -12,36 +10,46 @@ import java.io.UnsupportedEncodingException;
 public class ParseFile extends Parse {
 
 	public ParseFile() {
-		//super();
 	}
 	
-	public void parseFile(String path) throws UnsupportedEncodingException, IOException {
+	public void parseWords(String path) {
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-			
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(path));
+	        StringBuilder sb = new StringBuilder();
+	        String inputLine = br.readLine();
 
-            while (line != null) {
+            while (inputLine != null) {
             	
-                String[] words = line.split(" ");
+                String[] words = inputLine.split(" ");
                 
                 for (int i = 0; i < words.length; i++) {
-                    if (getWordFrequency().get(words[i]) == null) {
-                    	getWordFrequency().put(words[i], 1);
-                    } 
-                    else {
-                        int newValue = Integer.valueOf(String.valueOf(getWordFrequency().get(words[i])));
-                        newValue++;
-                        getWordFrequency().put(words[i], newValue);
-                    }
+                	if(!getStopWords().contains(words[i])){
+	                    if (getWordFrequency().get(words[i]) == null) {
+	                    	getWordFrequency().put(words[i], 1);
+	                    } 
+	                    else {
+	                        int newValue = Integer.valueOf(String.valueOf(getWordFrequency().get(words[i])));
+	                        newValue++;
+	                        getWordFrequency().put(words[i], newValue);
+	                    }
+                	}
+                	else{
+	            		//System.out.println("ParseFile: Word - " + words[i] + " Ignored");
+	            	}
                 }
                 
                 sb.append(System.lineSeparator());
-                line = br.readLine();
+                inputLine = br.readLine();
             }
             
+            br.close();
+            
             //System.out.println(getWordFrequency().keySet());
+            System.out.println("File Parse Task Complete!");
         }
+		catch(Exception e){
+			System.out.println("Error - " + e);
+		}
 	}
 }

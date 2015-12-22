@@ -16,8 +16,6 @@ public abstract class Parse implements Parsable {
 	
 	private List<String> stopWords;
 	private Map<String, Integer> wordFrequency;
-	
-	private String text;
 
 	public Parse(){
 		this.stopWords = new ArrayList<String>();
@@ -29,13 +27,15 @@ public abstract class Parse implements Parsable {
 	 * This method will parse the words from the word frequency
 	 * hash map to the word cloud generator 
 	 */
-	public void parseWords() {
+	/*public void parseWords() {
 		new WordCloud(this.getWordFrequency());
-	}
+	}*/
 	
 	public void setStopWords(String path) {
+		
 		BufferedReader reader;
 		String line;
+		
 		try {
 			reader = new BufferedReader(new FileReader(path));
 			
@@ -47,8 +47,9 @@ public abstract class Parse implements Parsable {
 			/*for (String word : this.stopWords)
 			    System.out.println("String: " + word);*/
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			System.out.println("Error - " + e);
 		}
 	}
 
@@ -66,13 +67,5 @@ public abstract class Parse implements Parsable {
 
 	public void setWordFrequency(Map<String, Integer> wordFrequency) {
 		this.wordFrequency = wordFrequency;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 }

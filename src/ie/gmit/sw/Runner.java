@@ -8,8 +8,8 @@ import ie.gmit.sw.gui.*;
 public class Runner {
 
 	public static void main(String[] args) throws UnsupportedEncodingException, IOException {
-		new ParseURL().parseURL("http://example.com/");
-		new ParseFile().parseFile("stopwords.txt");
+		new ParseFile().parseWords("WarAndPeace.txt");
+		new ParseURL().parseWords("http://example.com/");
 		new WordCloudGUI();
 	}
 }
