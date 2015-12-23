@@ -15,19 +15,18 @@ public class WordCloudGUI extends JFrame {
 		currentPanel = new MainPanel();
 		setupFrame();
 	}
-
-	public static void main(String[] args) {
-		new WordCloudGUI().setVisible(true);
-	}
 	
 	private void setupFrame(){
 		setContentPane(currentPanel);
-		setTitle("Registration System");
-		setSize(505, 360);
+		setTitle("Word Cloud Generator");
+		setSize(705, 408);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-
+	
+	public static void main(String[] args) {
+		new WordCloudGUI().setVisible(true);
+	}
 }
