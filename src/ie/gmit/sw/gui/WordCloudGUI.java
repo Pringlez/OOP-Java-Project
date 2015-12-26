@@ -19,7 +19,7 @@ public class WordCloudGUI extends JFrame {
 	private void setupFrame(){
 		setContentPane(currentPanel);
 		setTitle("Word Cloud Generator");
-		setSize(705, 408);
+		setSize(702, 420);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);

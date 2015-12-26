@@ -10,6 +10,7 @@ import java.io.FileReader;
 public class ParseFile extends Parse {
 
 	public ParseFile() {
+		super("stopwords.txt");
 	}
 	
 	public void parseWords(String path) {
@@ -24,19 +25,7 @@ public class ParseFile extends Parse {
                 String[] words = inputLine.split(" ");
                 
                 for (int i = 0; i < words.length; i++) {
-                	if(!getStopWords().contains(words[i])){
-	                    if (getWordFrequency().get(words[i]) == null) {
-	                    	getWordFrequency().put(words[i], 1);
-	                    } 
-	                    else {
-	                        int newValue = Integer.valueOf(String.valueOf(getWordFrequency().get(words[i])));
-	                        newValue++;
-	                        getWordFrequency().put(words[i], newValue);
-	                    }
-                	}
-                	else{
-	            		//System.out.println("ParseFile: Word - " + words[i] + " Ignored");
-	            	}
+                	addWord(words[i]);
                 }
                 
                 sb.append(System.lineSeparator());
@@ -45,11 +34,11 @@ public class ParseFile extends Parse {
             
             br.close();
             
-            //System.out.println(getWordFrequency().keySet());
+            System.out.println(getWordFrequency().keySet());
             System.out.println("File Parse Task Complete!");
         }
 		catch(Exception e){
-			System.out.println("Error - " + e);
+			System.out.println("Error File - " + e);
 		}
 	}
 }

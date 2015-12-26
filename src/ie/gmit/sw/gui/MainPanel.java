@@ -56,7 +56,7 @@ public class MainPanel extends JPanel {
 		optionsPanel.setBorder(panelOptionsTitle);
 		
 		JLabel lblStatus = new JLabel("Status:");
-		lblStatus.setBounds(525, 15, 46, 14);
+		lblStatus.setBounds(515, 15, 60, 14);
 		optionsPanel.add(lblStatus);
 		
 		txtStatus = new JLabel("N/A");
@@ -64,7 +64,7 @@ public class MainPanel extends JPanel {
 		optionsPanel.add(txtStatus);
 		
 		JLabel lblParseType = new JLabel("Parse Type:");
-		lblParseType.setBounds(10, 15, 70, 14);
+		lblParseType.setBounds(10, 15, 90, 14);
 		optionsPanel.add(lblParseType);
 		
 		final JRadioButton rdbtnFile = new JRadioButton("File");
@@ -78,7 +78,7 @@ public class MainPanel extends JPanel {
 			}
 		});
 		buttonGroup.add(rdbtnFile);
-		rdbtnFile.setBounds(80, 12, 52, 23);
+		rdbtnFile.setBounds(100, 12, 52, 23);
 		optionsPanel.add(rdbtnFile);
 		
 		final JRadioButton rdbtnUrl = new JRadioButton("URL");
@@ -90,7 +90,7 @@ public class MainPanel extends JPanel {
 			}
 		});
 		buttonGroup.add(rdbtnUrl);
-		rdbtnUrl.setBounds(130, 12, 52, 23);
+		rdbtnUrl.setBounds(150, 12, 52, 23);
 		optionsPanel.add(rdbtnUrl);
 		
 		rdbtnFile.setSelected(true);
@@ -120,11 +120,7 @@ public class MainPanel extends JPanel {
 				int returnVal = fc.showOpenDialog(MainPanel.this);
 				 
 	            if (returnVal == JFileChooser.APPROVE_OPTION) {
-	                System.out.println("Opening: " + fc.getSelectedFile().getAbsolutePath() + ".");
 	                textFieldFile.setText(fc.getSelectedFile().getAbsolutePath());
-	            } 
-	            else {
-	            	System.out.println("Opening Cancelled");
 	            }
 			}
 		});
@@ -181,8 +177,8 @@ public class MainPanel extends JPanel {
 	}
 	
 	private void setupMiscObjects(){
-		JButton btnGenerate = new JButton("Re-Generate");
-		btnGenerate.setBounds(578, 347, 112, 23);
+		JButton btnGenerate = new JButton("Generate");
+		btnGenerate.setBounds(558, 345, 130, 23);
 		add(btnGenerate);
 	}
 }

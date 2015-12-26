@@ -11,26 +11,28 @@ import java.util.Map;
 /*
  * The Parse abstract class will contain variables & methods
  * shared between different types of parsers
+ * 
+ * It implements the parsable interface which must be implemented
+ * by subclasses of this class 'Parse'
  */
 public abstract class Parse implements Parsable {
 	
 	private List<String> stopWords;
 	private Map<String, Integer> wordFrequency;
+	
+	public Parse() {
+	}
 
-	public Parse(){
-		this.stopWords = new ArrayList<String>();
-		this.wordFrequency = new HashMap<String, Integer>();
-		setStopWords("stopwords.txt");
+	public Parse(String stopWordsPath){
+		setStopWords(new ArrayList<String>());
+		setWordFrequency(new HashMap<String, Integer>());
+		setStopWords(stopWordsPath);
 	}
 	
 	/*
-	 * This method will parse the words from the word frequency
-	 * hash map to the word cloud generator 
+	 * This method can be used to configure / set the words to be ignored
+	 * by the parsing application
 	 */
-	/*public void parseWords() {
-		new WordCloud(this.getWordFrequency());
-	}*/
-	
 	public void setStopWords(String path) {
 		
 		BufferedReader reader;
@@ -43,14 +45,33 @@ public abstract class Parse implements Parsable {
 			    this.stopWords.add(line);
 			
 			reader.close();
-			
-			/*for (String word : this.stopWords)
-			    System.out.println("String: " + word);*/
-			
 		} 
 		catch (IOException e) {
 			System.out.println("Error - " + e);
 		}
+	}
+	
+	/*
+	 * This method checks if the word passed is not in the stop words
+	 * list, if so it will be ignored by the application.
+	 * If the word is valid it will be added to the hash map or 
+	 * increment the frequency value if it's already contained in the map.
+	 */
+	public void addWord(String word){
+		if(!getStopWords().contains(word)){
+            if (getWordFrequency().get(word) == null) {
+            	getWordFrequency().put(word, 1);
+            } 
+            else {
+                int newValue = Integer.valueOf(String.valueOf(getWordFrequency().get(word)));
+                newValue++;
+                getWordFrequency().put(word, newValue);
+            }
+    	}
+    	else{
+    		//System.out.println("Word - " + word + " Ignored!");
+    	}
+		//System.out.println("Word: " + word + " Added!");
 	}
 
 	public List<String> getStopWords() {

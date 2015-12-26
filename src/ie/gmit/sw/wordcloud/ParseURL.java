@@ -12,6 +12,7 @@ import java.net.URLConnection;
 public class ParseURL extends Parse {
 	
 	public ParseURL() {
+		super("stopwords.txt");
 	}
 	
 	public void parseWords(String url) {
@@ -25,35 +26,52 @@ public class ParseURL extends Parse {
 	        
 	        while (inputLine != null) {
 	        	
-	            String[] words = inputLine.split(" ");
-	            
-	            for (int i = 0; i < words.length; i++) {
-	            	if(!getStopWords().contains(words[i])){
-		                if (getWordFrequency().get(words[i]) == null) {
-		                	getWordFrequency().put(words[i], 1);
-		                } 
-		                else {
-		                    int newValue = Integer.valueOf(String.valueOf(getWordFrequency().get(words[i])));
-		                    newValue++;
-		                    getWordFrequency().put(words[i], newValue);
-		                }
-	            	}
-	            	else{
-	            		//System.out.println("ParseURL: Word - " + words[i] + " Ignored");
-	            	}
-	            }
-	            
-	            sb.append(System.lineSeparator());
-	            inputLine = br.readLine();
+	        	char[] chars = inputLine.toCharArray();
+	        	
+	        	boolean validCharsFound = false;
+	        	String word = "";
+	        	
+	        	for(int i = 0; i < chars.length; i++){
+	        		if(isValidChar(chars[i])){
+	        			sb.append(chars[i]);
+	        			if(!validCharsFound)
+	        				validCharsFound = true;
+	        		}
+	        		else{
+	        			
+	        			if(validCharsFound){
+	        				word = sb.toString();
+	        				validCharsFound = false;
+	        				addWord(word);
+	    	        		sb.setLength(0);
+	        			}
+	        		}
+	        	}
+	        	
+	        	inputLine = br.readLine();
 	        }
 	        
 	        br.close();
             
-            //System.out.println(getWordFrequency().keySet());
+            System.out.println(getWordFrequency().keySet());
             System.out.println("URL Parse Task Complete!");
 		}
 		catch(Exception e){
-			System.out.println("Error - " + e);
+			System.out.println("Error URL - " + e);
+		}
+	}
+	
+	private boolean isValidChar(char testChar){
+		try{
+			if((testChar > 'A' && testChar < 'Z') || (testChar > 'a' && testChar < 'z')){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		catch(Exception e){
+			return false;	
 		}
 	}
 }
