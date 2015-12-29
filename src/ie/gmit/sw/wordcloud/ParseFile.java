@@ -34,11 +34,14 @@ public class ParseFile extends Parse {
             
             br.close();
             
-            System.out.println(getWordFrequency().keySet());
+            //System.out.println(getWordFrequency().keySet());
             System.out.println("File Parse Task Complete!");
+            
+            genWordCloud(0);
         }
 		catch(Exception e){
 			System.out.println("Error File - " + e);
+			e.printStackTrace();
 		}
 	}
 }

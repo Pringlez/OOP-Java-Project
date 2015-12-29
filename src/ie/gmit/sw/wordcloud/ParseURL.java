@@ -38,7 +38,6 @@ public class ParseURL extends Parse {
 	        				validCharsFound = true;
 	        		}
 	        		else{
-	        			
 	        			if(validCharsFound){
 	        				word = sb.toString();
 	        				validCharsFound = false;
@@ -53,8 +52,10 @@ public class ParseURL extends Parse {
 	        
 	        br.close();
             
-            System.out.println(getWordFrequency().keySet());
+            //System.out.println(getWordFrequency().keySet());
             System.out.println("URL Parse Task Complete!");
+            
+            genWordCloud(0);
 		}
 		catch(Exception e){
 			System.out.println("Error URL - " + e);

@@ -30,7 +30,7 @@ public abstract class Parse implements Parsable {
 	}
 	
 	/*
-	 * This method can be used to configure / set the words to be ignored
+	 * This method is used to configure / set the words to be ignored
 	 * by the parsing application
 	 */
 	public void setStopWords(String path) {
@@ -68,10 +68,11 @@ public abstract class Parse implements Parsable {
                 getWordFrequency().put(word, newValue);
             }
     	}
-    	else{
-    		//System.out.println("Word - " + word + " Ignored!");
-    	}
-		//System.out.println("Word: " + word + " Added!");
+	}
+	
+	public void genWordCloud(int option){
+		WordCloud wordC = new WordCloud(getWordFrequency());
+		wordC.genWordCloud(option);
 	}
 
 	public List<String> getStopWords() {

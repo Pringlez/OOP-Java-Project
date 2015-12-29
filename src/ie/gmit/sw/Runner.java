@@ -17,9 +17,9 @@ public class Runner {
 		app = new ParseFile();
 		app.parseWords("WarAndPeace.txt");
 		
-		app = new ParseURL();
-		app.parseWords("http://example.com/");
+		//app = new ParseURL();
+		//app.parseWords("http://example.com/");
 		
-		new WordCloudGUI();
+		//new WordCloudGUI();
 	}
 }
