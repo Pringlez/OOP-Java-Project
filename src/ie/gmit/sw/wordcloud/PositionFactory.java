@@ -9,7 +9,7 @@ public class PositionFactory {
 
 	public static int getRandPos(int maxRange){
 		Random gen = new Random(System.nanoTime());
-	    int num = gen.nextInt();
+	    int num = gen.nextInt(((maxRange - 250) - 50) + 1) + 50;
 	    return num;
 	}
 }

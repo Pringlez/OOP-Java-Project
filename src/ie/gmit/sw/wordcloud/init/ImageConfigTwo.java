@@ -19,7 +19,7 @@ public class ImageConfigTwo implements Configurable {
 	
 	public void setup() {
 		this.image = new BufferedImage(maxXPos, maxYPos, BufferedImage.TYPE_4BYTE_ABGR);
-		this.graphics = image.getGraphics();
+		this.graphics = getImage().getGraphics();
 	}
 
 	public Font getFont() {

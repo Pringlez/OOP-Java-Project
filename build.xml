@@ -26,13 +26,16 @@
 	<property name="app.version" value="1.0"/>
 	<property name="app.version.name" value="Scarab"/>
 	<property name="jre.target" value="1.5"/>
+    <property name="lib.dir" value="./libs"/>
 	<property name="srcDir" value="./src/"/>
 	<property name="distDir" value="./dist"/>
 	<property name="docDir" value="${distDir}/docs"/>
-
-	<path id="classpath">
-    	<pathelement location="." />
-  	</path>
+    
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
   	
 	<echo>
 	    ----------------------------------------------------------------------------
@@ -60,13 +63,12 @@
 		<tstamp/>
     	<mkdir dir="${distDir}"/>
 
-
 	</target>	
 
     
 	<!-- Compile source code -->
 	<target name="compile" depends="init">
-		<javac target="${jre.target}" source="${jre.target}" srcdir="${srcDir}" destdir="${distDir}">
+		<javac includeantruntime="false" target="${jre.target}" source="${jre.target}" srcdir="${srcDir}" destdir="${distDir}">
 		    <classpath refid="classpath" />
 		</javac>
 	</target>
@@ -74,7 +76,8 @@
 
 	<!-- Create Java application archive (Jar) -->
 	<target name="archive" depends="compile">
-        <jar destfile="${distDir}/wordcloud.jar" basedir="${distDir}" excludes="**/*Test.class, **/Compact*.class">         
+        <jar destfile="${distDir}/wordcloud.jar" basedir="${distDir}" excludes="**/*Test.class, **/Compact*.class ">
+             <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
         	 <manifest>
         	 	<attribute name="Main-Class" value="ie.gmit.sw.Runner"/>
 				<attribute name="Built-By" value="${user.name}"/>

@@ -1,9 +1,7 @@
 package ie.gmit.sw.wordcloud;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 /*
  * The ParseURL class will be responsible for parsing 
@@ -14,8 +12,30 @@ public class ParseURL extends Parse {
 	public ParseURL() {
 		super("stopwords.txt");
 	}
-	
+
 	public void parseWords(String url) {
+		
+		try {
+			Document doc = Jsoup.connect(url).get();
+			String text = doc.body().text();
+			
+			String[] words = text.split(" ");
+            
+            for (int i = 0; i < words.length; i++) {
+            	addWord(words[i]);
+            }
+        
+	        //System.out.println(getWordFrequency().keySet());
+	        System.out.println("File Parse Task Complete!");
+	        
+	        genWordCloud(0);
+		}
+		catch(Exception e){
+			System.out.println("Error URL - " + e);
+		}
+	}
+	
+	/*public void parseWords(String url) {
 		
 		try {
 			URL urlPath = new URL(url);
@@ -74,5 +94,5 @@ public class ParseURL extends Parse {
 		catch(Exception e){
 			return false;	
 		}
-	}
+	}*/
 }
