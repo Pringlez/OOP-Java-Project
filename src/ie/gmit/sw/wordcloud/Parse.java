@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ie.gmit.sw.wordcloud.main.WordCloud;
+
 /*
  * The Parse abstract class will contain variables & methods
  * shared between different types of parsers
@@ -18,14 +20,14 @@ import java.util.Map;
 public abstract class Parse implements Parsable {
 	
 	private List<String> stopWords;
-	private Map<String, Integer> wordFrequency;
+	private Map<String, Integer> wordFrequencyMap;
 	
 	public Parse() {
 	}
 
 	public Parse(String stopWordsPath){
 		setStopWords(new ArrayList<String>());
-		setWordFrequency(new HashMap<String, Integer>());
+		setWordFrequencyMap(new HashMap<String, Integer>());
 		setStopWords(stopWordsPath);
 	}
 	
@@ -59,20 +61,23 @@ public abstract class Parse implements Parsable {
 	 */
 	public void addWord(String word){
 		if(!getStopWords().contains(word)){
-            if (getWordFrequency().get(word) == null) {
-            	getWordFrequency().put(word, 1);
+            if (getWordFrequencyMap().get(word) == null) {
+            	getWordFrequencyMap().put(word, 1);
             } 
             else {
-                int newValue = Integer.valueOf(String.valueOf(getWordFrequency().get(word)));
+                int newValue = Integer.valueOf(String.valueOf(getWordFrequencyMap().get(word)));
                 newValue++;
-                getWordFrequency().put(word, newValue);
+                getWordFrequencyMap().put(word, newValue);
             }
     	}
 	}
 	
-	public void genWordCloud(int option){
-		WordCloud wordC = new WordCloud(getWordFrequency());
-		wordC.genWordCloud(option);
+	/*
+	 *  The option variable is used to configure the image
+	 */
+	public void createWordCloud(int imageOption, int maxWords){
+		WordCloud wordC = new WordCloud(getWordFrequencyMap());
+		wordC.configWordCloud(imageOption, maxWords);
 	}
 
 	public List<String> getStopWords() {
@@ -83,11 +88,11 @@ public abstract class Parse implements Parsable {
 		this.stopWords = stopWords;
 	}
 	
-	public Map<String, Integer> getWordFrequency() {
-		return wordFrequency;
+	public Map<String, Integer> getWordFrequencyMap() {
+		return wordFrequencyMap;
 	}
 
-	public void setWordFrequency(Map<String, Integer> wordFrequency) {
-		this.wordFrequency = wordFrequency;
+	public void setWordFrequencyMap(Map<String, Integer> wordFrequencyMap) {
+		this.wordFrequencyMap = wordFrequencyMap;
 	}
 }

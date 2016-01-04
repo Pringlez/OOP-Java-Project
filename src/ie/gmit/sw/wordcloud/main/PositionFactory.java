@@ -1,4 +1,4 @@
-package ie.gmit.sw.wordcloud;
+package ie.gmit.sw.wordcloud.main;
 
 import java.util.Random;
 
@@ -9,7 +9,7 @@ public class PositionFactory {
 
 	public static int getRandPos(int maxRange){
 		Random gen = new Random(System.nanoTime());
-	    int num = gen.nextInt(((maxRange - 250) - 50) + 1) + 50;
+	    int num = gen.nextInt(((maxRange - 100) - 100) + 1) + 100;
 	    return num;
 	}
 }

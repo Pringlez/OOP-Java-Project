@@ -1,4 +1,4 @@
-package ie.gmit.sw.wordcloud;
+package ie.gmit.sw.wordcloud.main;
 
 import java.awt.Color;
 import java.util.Random;

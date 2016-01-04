@@ -9,26 +9,22 @@ import java.io.FileReader;
  */
 public class ParseFile extends Parse {
 
-	public ParseFile() {
-		super("stopwords.txt");
+	public ParseFile(String stopWordsFile) {
+		super(stopWordsFile);
 	}
 	
-	public void parseWords(String path) {
-		
+	public void parseWords(String path, int imageOption, int maxWords) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
-	        StringBuilder sb = new StringBuilder();
 	        String inputLine = br.readLine();
 
             while (inputLine != null) {
             	
                 String[] words = inputLine.split(" ");
                 
-                for (int i = 0; i < words.length; i++) {
-                	addWord(words[i]);
-                }
+                for (int i = 0; i < words.length; i++)
+                	addWord(words[i].toLowerCase());
                 
-                sb.append(System.lineSeparator());
                 inputLine = br.readLine();
             }
             
@@ -37,7 +33,7 @@ public class ParseFile extends Parse {
             //System.out.println(getWordFrequency().keySet());
             System.out.println("File Parse Task Complete!");
             
-            genWordCloud(0);
+            createWordCloud(imageOption, maxWords);
         }
 		catch(Exception e){
 			System.out.println("Error File - " + e);

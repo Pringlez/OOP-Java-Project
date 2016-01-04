@@ -1,4 +1,4 @@
-package ie.gmit.sw.wordcloud;
+package ie.gmit.sw.wordcloud.main;
 
 import java.util.Map;
 import ie.gmit.sw.wordcloud.init.*;
@@ -9,17 +9,17 @@ import ie.gmit.sw.wordcloud.init.*;
  */
 public class WordCloud {
 	
-	private Map<String, Integer> wordFrequency;
+	private Map<String, Integer> wordFrequencyMap;
 
-	public WordCloud(Map<String, Integer> wordFrequency) {
-		this.wordFrequency = wordFrequency;
+	public WordCloud(Map<String, Integer> wordFrequencyMap) {
+		this.wordFrequencyMap = wordFrequencyMap;
 	}
 	
-	public void genWordCloud(int option) {
+	public void configWordCloud(int imageOption, int maxWords) {
 		
 		Configurable config;
 		
-		switch(option){
+		switch(imageOption){
 			case 0:
 				config = new ImageConfigOne();
 			break;
@@ -34,6 +34,6 @@ public class WordCloud {
 			break;
 		}
 		
-		new Generator(config, wordFrequency);
+		new Generator(config, wordFrequencyMap, maxWords);
 	}
 }
