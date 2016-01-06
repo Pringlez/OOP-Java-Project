@@ -9,7 +9,7 @@ import org.jsoup.nodes.Document;
  */
 public class ParseURL extends Parse {
 	
-	public ParseURL(String stopWordsFile) {
+	public ParseURL(String stopWordsFile) throws Exception {
 		super(stopWordsFile);
 	}
 

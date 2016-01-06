@@ -1,10 +1,8 @@
 package ie.gmit.sw.wordcloud.main;
 
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.font.GlyphVector;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,73 +14,40 @@ import javax.imageio.ImageIO;
 
 import ie.gmit.sw.wordcloud.init.Configurable;
 
-public class Generator {
+public class ImageGenerator {
 
 	private Configurable config;
 	private List<WordConfig> wordConfigList = new ArrayList<WordConfig>();
 
-	public Generator(Configurable config, Map<String, Integer> wordFrequencyMap, int maxWords) {
+	public ImageGenerator(Configurable config, Map<String, Integer> wordFrequencyMap, int maxWords) throws Exception {
 		setConfig(config);
 		sortFrequencies(wordFrequencyMap);
 		generateImage(wordConfigList, maxWords);
-		generateImage2(wordConfigList, maxWords);
 	}
 	
 	/*
-	 * Implementation number 1
+	 * Implementation generateImage, takes a List of configured words
+	 * and max amount of words to be taken from that list to populate
+	 * the image being created
 	 */
-	public void generateImage(List<WordConfig> wordConfigList, int maxWords){
+	public boolean generateImage(List<WordConfig> wordConfigList, int maxWords) {
 		try {
-			int wordCount = 0;
-			
-			for(WordConfig wordConfig : this.wordConfigList) {
-				if(wordCount < maxWords){
-			    	if(!wordConfig.getWord().equals("")){
-				        getConfig().getGraphics().setColor(ColourFactory.getRandColor());
-				        getConfig().getGraphics().setFont(new Font(Font.SANS_SERIF, Font.BOLD, wordConfig.getFontSize()));
-				        getConfig().getGraphics().drawString(wordConfig.getWord(), wordConfig.getPosX(), wordConfig.getPosY());
-			    	}
-			    	wordCount++;
-		    	}
-		    	else{
-		    		break;
-		    	}
-			}
-		    
-		    getConfig().getGraphics().dispose();
-		    
-		    ImageIO.write(getConfig().getImage(), "png", new File("image.png"));
-			System.out.println("Image Generated! - 1");
-		}
-		catch(Exception e){
-			System.out.println("Something went wrong! - " + e);
-			e.printStackTrace();
-		}
-	}
-	
-	/*
-	 * Implementation number 2
-	 */
-	public void generateImage2(List<WordConfig> wordConfigList, int maxWords) {
-		try {
-			BufferedImage image = new BufferedImage(getConfig().getMaxXPos(), getConfig().getMaxYPos(), BufferedImage.TYPE_INT_ARGB);
-		    Graphics2D graphics = image.createGraphics();
-		    
+		    ColourFactory colFactory = new ColourFactory();
 		    int wordCount = 0;
 			
 		    for(WordConfig wordConfig : this.wordConfigList) {
 		    	if(wordCount < maxWords){
 		    		if(!wordConfig.getWord().equals("")){
 			    		
-			    		graphics.setColor(ColourFactory.getRandColor());
-			    		graphics.setFont(new Font(Font.SANS_SERIF, Font.BOLD, wordConfig.getFontSize()));
+		    			getConfig().getGraphics().setColor(colFactory.getRandomColor());
+		    			getConfig().getGraphics().setFont(new Font(Font.SANS_SERIF, Font.BOLD, wordConfig.getFontSize()));
 			    		
-			    		GlyphVector vect = getConfig().getGraphics().getFont().createGlyphVector(graphics.getFontRenderContext(), wordConfig.getWord());
+			    		GlyphVector vect = getConfig().getGraphics().getFont().createGlyphVector(getConfig().getGraphics().getFontRenderContext(), wordConfig.getWord());
 				    	Shape shape = vect.getOutline(0f, (float) -vect.getVisualBounds().getY());
 				        
 				        //graphics.rotate(Math.toRadians(45));
-				        graphics.fill(shape);
-				        graphics.drawString(wordConfig.getWord(), wordConfig.getPosX(), wordConfig.getPosY());
+				    	getConfig().getGraphics().fill(shape);
+				    	getConfig().getGraphics().drawString(wordConfig.getWord(), wordConfig.getPosX(), wordConfig.getPosY());
 		    		}
 		    		wordCount++;
 		    	}
@@ -91,18 +56,21 @@ public class Generator {
 		    	}
 		    }
 		    
-		    graphics.dispose();
+		    getConfig().getGraphics().dispose();
 		    
-		    ImageIO.write(image, "png", new File("test.png"));
+		    ImageIO.write(getConfig().getImage(), "png", new File("image.png"));
 		    System.out.println("Image Generated! - 2");
+		    
+		    return true;
 		}
 		catch(Exception e){
 			System.out.println("Something went wrong! - " + e);
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
-	public void sortFrequencies(Map<String, Integer> wordFrequency){
+	public boolean sortFrequencies(Map<String, Integer> wordFrequency){
 		
 		int defaultPosX = 0;
 		int defaultPosY = 0;
@@ -132,10 +100,12 @@ public class Generator {
 			int posY = 0;
 			int count = 0;
 			
+			PositionGenerator posGenerator = new PositionGenerator();
+			
 			for(WordConfig wordConfig : this.wordConfigList) {
 				
-				posX = PositionFactory.getRandPos(getConfig().getMaxXPos());
-		        posY = PositionFactory.getRandPos(getConfig().getMaxYPos());
+				posX = posGenerator.getRandomPos(getConfig().getMaxXPos());
+		        posY = posGenerator.getRandomPos(getConfig().getMaxYPos());
 				
 				if(count == 0){
 					wordConfig.setFontSize(90);
@@ -166,10 +136,13 @@ public class Generator {
 		        System.out.println("Test - Font Size: " + wordConfig.getFontSize() + " Pos X: " + wordConfig.getPosX() + " Pos Y: " + wordConfig.getPosY());
 		        count++;
 	        }
+			
+			return true;
 		}
 		catch(Exception e){
 			System.out.println("Something went wrong! - " + e);
 			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -177,7 +150,9 @@ public class Generator {
 		return config;
 	}
 
-	public void setConfig(Configurable config) {
+	public void setConfig(Configurable config) throws Exception {
+		if(config == null) throw new Exception("Error: Invalid Configuration");
+		
 		this.config = config;
 	}
 }

@@ -5,19 +5,10 @@ import java.util.Random;
 
 public class ColourFactory {
 	
-	private ColourFactory() {
+	public ColourFactory() {
 	}
 	
-	/*public static Color getRandColor(){
-		Random gen = new Random(System.nanoTime());
-	    float r = gen.nextFloat();
-	    float g = gen.nextFloat();
-	    float b = gen.nextFloat();
-	    Color randomColor = new Color(r, g, b);
-	    return randomColor;
-	}*/
-	
-	public static Color getRandColor(){
+	public Color getRandomColor(){
 		
 		Random gen = new Random(System.nanoTime());
 		int num = gen.nextInt((6 - 0) + 1) + 0;

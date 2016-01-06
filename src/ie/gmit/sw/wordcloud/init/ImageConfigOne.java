@@ -1,7 +1,7 @@
 package ie.gmit.sw.wordcloud.init;
 
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class ImageConfigOne implements Configurable {
@@ -11,7 +11,7 @@ public class ImageConfigOne implements Configurable {
 	
 	private Font font;
 	private BufferedImage image;
-	private Graphics graphics;
+	private Graphics2D graphics;
 	
 	public ImageConfigOne(){
 		setup();
@@ -19,7 +19,7 @@ public class ImageConfigOne implements Configurable {
 	
 	public void setup() {
 		this.image = new BufferedImage(maxXPos, maxYPos, BufferedImage.TYPE_4BYTE_ABGR);
-		this.graphics = getImage().getGraphics();
+		this.graphics = getImage().createGraphics();
 	}
 
 	public Font getFont() {
@@ -35,7 +35,7 @@ public class ImageConfigOne implements Configurable {
 		this.font = font;
 	}
 	
-	public Graphics getGraphics() {
+	public Graphics2D getGraphics() {
 		return graphics;
 	}
 	

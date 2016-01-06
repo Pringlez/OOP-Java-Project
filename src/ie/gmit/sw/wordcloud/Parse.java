@@ -25,7 +25,7 @@ public abstract class Parse implements Parsable {
 	public Parse() {
 	}
 
-	public Parse(String stopWordsPath){
+	public Parse(String stopWordsPath) throws Exception{
 		setStopWords(new ArrayList<String>());
 		setWordFrequencyMap(new HashMap<String, Integer>());
 		setStopWords(stopWordsPath);
@@ -75,7 +75,7 @@ public abstract class Parse implements Parsable {
 	/*
 	 *  The option variable is used to configure the image
 	 */
-	public void createWordCloud(int imageOption, int maxWords){
+	public void createWordCloud(int imageOption, int maxWords) throws Exception {
 		WordCloud wordC = new WordCloud(getWordFrequencyMap());
 		wordC.configWordCloud(imageOption, maxWords);
 	}
@@ -84,7 +84,9 @@ public abstract class Parse implements Parsable {
 		return stopWords;
 	}
 
-	public void setStopWords(List<String> stopWords) {
+	public void setStopWords(List<String> stopWords) throws Exception {
+		if(stopWords == null) throw new Exception("Error: Invalid Stop Words List");
+		
 		this.stopWords = stopWords;
 	}
 	
@@ -92,7 +94,9 @@ public abstract class Parse implements Parsable {
 		return wordFrequencyMap;
 	}
 
-	public void setWordFrequencyMap(Map<String, Integer> wordFrequencyMap) {
+	public void setWordFrequencyMap(Map<String, Integer> wordFrequencyMap) throws Exception {
+		if(wordFrequencyMap == null) throw new Exception("Error: Invalid Word Frequency Map");
+		
 		this.wordFrequencyMap = wordFrequencyMap;
 	}
 }

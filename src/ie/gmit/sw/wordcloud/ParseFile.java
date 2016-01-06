@@ -9,7 +9,7 @@ import java.io.FileReader;
  */
 public class ParseFile extends Parse {
 
-	public ParseFile(String stopWordsFile) {
+	public ParseFile(String stopWordsFile) throws Exception {
 		super(stopWordsFile);
 	}
 	

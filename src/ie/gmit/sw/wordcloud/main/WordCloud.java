@@ -4,8 +4,8 @@ import java.util.Map;
 import ie.gmit.sw.wordcloud.init.*;
 
 /*
- * The WordCloud class will be responsible for generating 
- * the word cloud image in png format
+ * The WordCloud class will be responsible for configuring
+ * the word cloud image before any words are drawn on the image
  */
 public class WordCloud {
 	
@@ -15,7 +15,7 @@ public class WordCloud {
 		this.wordFrequencyMap = wordFrequencyMap;
 	}
 	
-	public void configWordCloud(int imageOption, int maxWords) {
+	public void configWordCloud(int imageOption, int maxWords) throws Exception {
 		
 		Configurable config;
 		
@@ -34,6 +34,6 @@ public class WordCloud {
 			break;
 		}
 		
-		new Generator(config, wordFrequencyMap, maxWords);
+		new ImageGenerator(config, wordFrequencyMap, maxWords);
 	}
 }
