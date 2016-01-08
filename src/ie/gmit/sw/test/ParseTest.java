@@ -8,15 +8,15 @@ import java.util.HashMap;
 
 import ie.gmit.sw.wordcloud.*;
 
-public class TestParse {
+public class ParseTest {
 
 	private Parse parseOne = null;
 	private Parse parseTwo = null;
 	
 	@Before
 	public void setup() throws Exception {
-		parseOne = new ParseFile("stopwords.txt");
-		parseTwo = new ParseURL("stopwords.txt");
+		parseOne = new ParseFile("stopwords.txt", "fileparse");
+		parseTwo = new ParseURL("stopwords.txt", "urlparse");
 	}
 	
 	@After

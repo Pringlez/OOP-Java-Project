@@ -1,5 +1,11 @@
 package ie.gmit.sw.wordcloud.main;
 
+/**
+ * WordConfig.java - a class thats responsible for storing
+ * the configuration of words that have been parsed
+ * @author John Walsh
+ * @version 1.0.
+ */
 public class WordConfig {
 
 	private int posX;

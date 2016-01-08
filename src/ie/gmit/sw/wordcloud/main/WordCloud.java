@@ -3,9 +3,11 @@ package ie.gmit.sw.wordcloud.main;
 import java.util.Map;
 import ie.gmit.sw.wordcloud.init.*;
 
-/*
- * The WordCloud class will be responsible for configuring
- * the word cloud image before any words are drawn on the image
+/**
+ * WordCloud.java - a class thats responsible for configuring
+ * the word cloud image before any words are rendered on the image
+ * @author John Walsh
+ * @version 1.0.
  */
 public class WordCloud {
 	
@@ -15,7 +17,7 @@ public class WordCloud {
 		this.wordFrequencyMap = wordFrequencyMap;
 	}
 	
-	public void configWordCloud(int imageOption, int maxWords) throws Exception {
+	public void configWordCloud(int imageOption, int maxWords, String outputFileName) throws Exception {
 		
 		Configurable config;
 		
@@ -34,6 +36,6 @@ public class WordCloud {
 			break;
 		}
 		
-		new ImageGenerator(config, wordFrequencyMap, maxWords);
+		new ImageGenerator(config, wordFrequencyMap, maxWords, outputFileName);
 	}
 }

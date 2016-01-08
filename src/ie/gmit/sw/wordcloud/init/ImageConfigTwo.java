@@ -4,6 +4,13 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+/**  
+* ImageConfigTwo.java - a class that contains a configuration for an image
+* The dimensions for this image configuration is 1000 x 800
+* @author John Walsh
+* @version 1.0 
+* @see Configurable
+*/
 public class ImageConfigTwo implements Configurable {
 
 	private final int maxXPos = 1000;

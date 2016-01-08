@@ -3,16 +3,25 @@ package ie.gmit.sw.wordcloud;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-/*
- * The ParseFile class will be responsible for parsing 
- * words from a text file provided by the user
- */
+/**  
+* ParseFile.java - a class that is responsible for parsing 
+* words from a text file
+* @author John Walsh
+* @version 1.0 
+* @see ParseFile
+*/
 public class ParseFile extends Parse {
 
-	public ParseFile(String stopWordsFile) throws Exception {
+	private String outputFileName;
+	
+	public ParseFile(String stopWordsFile, String outputFileName) throws Exception {
 		super(stopWordsFile);
+		setOutputFileName(outputFileName);
 	}
 	
+	/**
+	 * This method is used to parse the words from a file found locally on the system.
+	 */
 	public void parseWords(String path, int imageOption, int maxWords) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
@@ -30,14 +39,29 @@ public class ParseFile extends Parse {
             
             br.close();
             
-            //System.out.println(getWordFrequency().keySet());
             System.out.println("File Parse Task Complete!");
             
-            createWordCloud(imageOption, maxWords);
+            createWordCloud(imageOption, maxWords, getOutputFileName());
         }
 		catch(Exception e){
 			System.out.println("Error File - " + e);
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * This method gets the output file name.
+	 * @return String
+	 */
+	public String getOutputFileName() {
+		return outputFileName;
+	}
+
+	/**
+	 * This method sets the output file name.
+	 * @param outputFileName is the name of the file that will be generated
+	 */
+	public void setOutputFileName(String outputFileName) {
+		this.outputFileName = outputFileName;
 	}
 }

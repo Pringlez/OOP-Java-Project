@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import ie.gmit.sw.wordcloud.main.*;
 
-public class TestPositionGenerator {
+public class PositionGeneratorTest {
 
 	private PositionGenerator posGenerator = null;
 	

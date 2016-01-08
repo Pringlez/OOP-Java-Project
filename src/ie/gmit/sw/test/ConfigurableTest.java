@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import ie.gmit.sw.wordcloud.init.*;
 
-public class TestConfigurable {
+public class ConfigurableTest {
 
 	private Configurable config = null;
 	

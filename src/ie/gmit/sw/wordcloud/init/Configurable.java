@@ -4,6 +4,12 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+/**  
+* Configurable.java - an interface of type configurable
+* Contains common methods used between different types of configurations
+* @author John Walsh
+* @version 1.0 
+*/
 public interface Configurable {
 	public void setup();
 	public Font getFont();

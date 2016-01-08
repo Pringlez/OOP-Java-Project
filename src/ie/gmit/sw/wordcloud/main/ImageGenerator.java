@@ -3,6 +3,7 @@ package ie.gmit.sw.wordcloud.main;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.font.GlyphVector;
+import java.awt.geom.Area;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,15 +15,21 @@ import javax.imageio.ImageIO;
 
 import ie.gmit.sw.wordcloud.init.Configurable;
 
+/**  
+* ImageGenerator.java - a class that generates the image from a file or URL.
+* @author John Walsh
+* @version 1.0.
+*/
 public class ImageGenerator {
 
 	private Configurable config;
 	private List<WordConfig> wordConfigList = new ArrayList<WordConfig>();
+	private List<Shape> shapesList = new ArrayList<Shape>();
 
-	public ImageGenerator(Configurable config, Map<String, Integer> wordFrequencyMap, int maxWords) throws Exception {
+	public ImageGenerator(Configurable config, Map<String, Integer> wordFrequencyMap, int maxWords, String outputFileName) throws Exception {
 		setConfig(config);
 		sortFrequencies(wordFrequencyMap);
-		generateImage(wordConfigList, maxWords);
+		generateImage(wordConfigList, maxWords, outputFileName);
 	}
 	
 	/*
@@ -30,10 +37,12 @@ public class ImageGenerator {
 	 * and max amount of words to be taken from that list to populate
 	 * the image being created
 	 */
-	public boolean generateImage(List<WordConfig> wordConfigList, int maxWords) {
+	public boolean generateImage(List<WordConfig> wordConfigList, int maxWords, String outputFileName) {
 		try {
 		    ColourFactory colFactory = new ColourFactory();
+		    PositionGenerator posGenerator = new PositionGenerator();
 		    int wordCount = 0;
+		    int wordCollisions = 0;
 			
 		    for(WordConfig wordConfig : this.wordConfigList) {
 		    	if(wordCount < maxWords){
@@ -41,14 +50,32 @@ public class ImageGenerator {
 			    		
 		    			getConfig().getGraphics().setColor(colFactory.getRandomColor());
 		    			getConfig().getGraphics().setFont(new Font(Font.SANS_SERIF, Font.BOLD, wordConfig.getFontSize()));
-			    		
+		    			
 			    		GlyphVector vect = getConfig().getGraphics().getFont().createGlyphVector(getConfig().getGraphics().getFontRenderContext(), wordConfig.getWord());
-				    	Shape shape = vect.getOutline(0f, (float) -vect.getVisualBounds().getY());
-				        
-				        //graphics.rotate(Math.toRadians(45));
+			    		
+			    		Shape shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
+			    		//getConfig().getGraphics().rotate(Math.toRadians(45));
+				    	
+				    	for(int i = 0; i < 1; i++){
+					    	if(!shapesList.isEmpty()){
+						    	for(Shape shapeTest : shapesList){
+						    		if(checkShapeIntersect(shape, shapeTest)){
+						    			wordConfig.setPosX(posGenerator.getRandomPos(getConfig().getMaxXPos()));
+						    			wordConfig.setPosY(posGenerator.getRandomPos(getConfig().getMaxYPos()));
+						    			shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
+						    			wordCollisions++;
+						    			i--;
+						    		}
+					    		}
+					    	}
+				    	}
+				    	
+				    	shapesList.add(shape);
 				    	getConfig().getGraphics().fill(shape);
-				    	getConfig().getGraphics().drawString(wordConfig.getWord(), wordConfig.getPosX(), wordConfig.getPosY());
+				    	
+				    	//getConfig().getGraphics().drawString(wordConfig.getWord(), wordConfig.getPosX(), wordConfig.getPosY());
 		    		}
+		    		
 		    		wordCount++;
 		    	}
 		    	else{
@@ -58,8 +85,8 @@ public class ImageGenerator {
 		    
 		    getConfig().getGraphics().dispose();
 		    
-		    ImageIO.write(getConfig().getImage(), "png", new File("image.png"));
-		    System.out.println("Image Generated! - 2");
+		    ImageIO.write(getConfig().getImage(), "png", new File(outputFileName + ".png"));
+		    System.out.println("Image Generated! - Word Collisions: " + wordCollisions);
 		    
 		    return true;
 		}
@@ -72,14 +99,13 @@ public class ImageGenerator {
 	
 	public boolean sortFrequencies(Map<String, Integer> wordFrequency){
 		
-		int defaultPosX = 0;
-		int defaultPosY = 0;
 		int defaultFontSize = 50;
+		PositionGenerator posGenerator = new PositionGenerator();
 		
 		try {
 			for (Entry<String, Integer> pair : wordFrequency.entrySet()) { 
 				if(!pair.getKey().equals("")){
-			    	this.wordConfigList.add(new WordConfig(defaultPosX, defaultPosY, pair.getKey(), defaultFontSize, pair.getValue(), pair.getKey().length()));
+			    	this.wordConfigList.add(new WordConfig(posGenerator.getRandomPos(getConfig().getMaxXPos()), posGenerator.getRandomPos(getConfig().getMaxYPos()), pair.getKey(), defaultFontSize, pair.getValue(), pair.getKey().length()));
 				}
 		    }
 			
@@ -96,16 +122,9 @@ public class ImageGenerator {
 			
 			Collections.sort(this.wordConfigList, freqComparator);
 			
-			int posX = 0;
-			int posY = 0;
 			int count = 0;
 			
-			PositionGenerator posGenerator = new PositionGenerator();
-			
 			for(WordConfig wordConfig : this.wordConfigList) {
-				
-				posX = posGenerator.getRandomPos(getConfig().getMaxXPos());
-		        posY = posGenerator.getRandomPos(getConfig().getMaxYPos());
 				
 				if(count == 0){
 					wordConfig.setFontSize(90);
@@ -113,27 +132,18 @@ public class ImageGenerator {
 					wordConfig.setPosY(getConfig().getMaxYPos() / 2);
 				}
 				else if(count >= 1 && count <= 5){
-		            wordConfig.setFontSize(60);
-		            wordConfig.setPosX(posX);
-					wordConfig.setPosY(posY);
+		            wordConfig.setFontSize(50);
 				}
 				else if(count >= 6 && count <= 10){
-					wordConfig.setFontSize(30);
-					wordConfig.setPosX(posX);
-					wordConfig.setPosY(posY);
+					wordConfig.setFontSize(40);
 				}
 				else if(count >= 11 && count <= 25){
-					wordConfig.setFontSize(16);
-					wordConfig.setPosX(posX);
-					wordConfig.setPosY(posY);
+					wordConfig.setFontSize(22);
 				}
 				else{
-					wordConfig.setFontSize(10);
-					wordConfig.setPosX(posX);
-					wordConfig.setPosY(posY);
+					wordConfig.setFontSize(18);	
 				}
 				
-		        System.out.println("Test - Font Size: " + wordConfig.getFontSize() + " Pos X: " + wordConfig.getPosX() + " Pos Y: " + wordConfig.getPosY());
 		        count++;
 	        }
 			
@@ -144,6 +154,12 @@ public class ImageGenerator {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	private boolean checkShapeIntersect(Shape shapeA, Shape shapeB) {
+	   Area areaA = new Area(shapeA);
+	   areaA.intersect(new Area(shapeB));
+	   return !areaA.isEmpty();
 	}
 
 	public Configurable getConfig() {

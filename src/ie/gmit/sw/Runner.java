@@ -3,6 +3,11 @@ package ie.gmit.sw;
 import ie.gmit.sw.wordcloud.*;
 import ie.gmit.sw.gui.*;
 
+/**
+ * Runner.java - a class that tests the word cloud api
+ * @author  John Walsh
+ * @version 1.0.
+ */
 public class Runner {
 
 	public static void main(String[] args) throws Exception {
@@ -12,11 +17,11 @@ public class Runner {
 		
 		Parse app;
 		
-		app = new ParseFile("stopwords.txt");
-		app.parseWords("WarAndPeace.txt", 0, 35);
+		app = new ParseFile("stopwords.txt", "fileparse");
+		app.parseWords("WarAndPeace.txt", 0, 50);
 		
-		app = new ParseURL("stopwords.txt");
-		app.parseWords("http://example.com/", 0, 35);
+		app = new ParseURL("stopwords.txt", "urlparse");
+		app.parseWords("http://www.bbc.com/news", 0, 50);
 		
 		//new WordCloudGUI();
 	}

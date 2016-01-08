@@ -26,7 +26,7 @@
 	<property name="app.version" value="1.0"/>
 	<property name="app.version.name" value="Scarab"/>
 	<property name="jre.target" value="1.5"/>
-    <property name="lib.dir" value="./libs"/>
+    <property name="lib.dir" value="./lib"/>
 	<property name="srcDir" value="./src/"/>
 	<property name="distDir" value="./dist"/>
 	<property name="docDir" value="${distDir}/docs"/>
@@ -62,9 +62,7 @@
     <target name="init" depends="clean">
 		<tstamp/>
     	<mkdir dir="${distDir}"/>
-
 	</target>	
-
     
 	<!-- Compile source code -->
 	<target name="compile" depends="init">
@@ -72,7 +70,6 @@
 		    <classpath refid="classpath" />
 		</javac>
 	</target>
-
 
 	<!-- Create Java application archive (Jar) -->
 	<target name="archive" depends="compile">
@@ -87,11 +84,10 @@
 			</manifest>
         </jar>
     </target>
-
 	
 	<!-- Generate JavaDocs -->
     <target name="docs" depends="archive">
-        <javadoc sourcepath="${srcDir}" destdir="${docDir}" author="true" version="true" use="true" windowtitle="A Java Word Cloud API" >
+        <javadoc sourcepath="${srcDir}" destdir="${docDir}" author="true" version="true" use="true" windowtitle="A Java Word Cloud API" classpathref="classpath">
             <doctitle><![CDATA[<h1>A Java Word Cloud API</h1>]]></doctitle>
             <bottom><![CDATA[<i>Copyright &#169; 2015</i>]]></bottom>
         </javadoc>

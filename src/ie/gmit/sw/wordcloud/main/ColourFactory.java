@@ -3,6 +3,12 @@ package ie.gmit.sw.wordcloud.main;
 import java.awt.Color;
 import java.util.Random;
 
+/**  
+* ColourFactory.java - a class that generates and returns an object
+* of type Colour
+* @author John Walsh
+* @version 1.0.
+*/
 public class ColourFactory {
 	
 	public ColourFactory() {

@@ -9,13 +9,13 @@ import java.util.HashMap;
 import ie.gmit.sw.wordcloud.main.*;
 import ie.gmit.sw.wordcloud.init.*;
 
-public class TestImageGenerator {
+public class ImageGeneratorTest {
 
 	private ImageGenerator imageGenerator = null;
 	
 	@Before
 	public void setup() throws Exception {
-		imageGenerator = new ImageGenerator(new ImageConfigOne(), new HashMap<String, Integer>(), 35);
+		imageGenerator = new ImageGenerator(new ImageConfigOne(), new HashMap<String, Integer>(), 35, "testfilename");
 	}
 	
 	@After
@@ -25,7 +25,7 @@ public class TestImageGenerator {
 	
 	@Test
 	public void validGenerateImage() throws Exception {
-		assertNotNull(imageGenerator.generateImage(new ArrayList<WordConfig>(), 35));
+		assertNotNull(imageGenerator.generateImage(new ArrayList<WordConfig>(), 35, "testfilename"));
 	}
 	
 	@Test

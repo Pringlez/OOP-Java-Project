@@ -4,6 +4,13 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+/**  
+* ImageConfigThree.java - a class that contains a configuration for an image
+* The dimensions for this image configuration is 1200 x 1000
+* @author John Walsh
+* @version 1.0 
+* @see Configurable
+*/
 public class ImageConfigThree implements Configurable {
 	
 	private final int maxXPos = 1200;

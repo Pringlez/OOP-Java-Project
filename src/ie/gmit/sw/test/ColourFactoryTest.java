@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import ie.gmit.sw.wordcloud.main.ColourFactory;
 
-public class TestColourFactory {
+public class ColourFactoryTest {
 
 	private ColourFactory colFactory = null;
 	
