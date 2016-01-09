@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**  
-* ImageConfigTwo.java - a class that contains a configuration for an image
+* ImageConfigTwo.java - A class that contains a configuration for an image
 * The dimensions for this image configuration is 1000 x 800
 * @author John Walsh
 * @version 1.0 
@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 */
 public class ImageConfigTwo implements Configurable {
 
+	private int minPos;
 	private final int maxXPos = 1000;
 	private final int maxYPos = 800;
 	
@@ -20,8 +21,12 @@ public class ImageConfigTwo implements Configurable {
 	private BufferedImage image;
 	private Graphics2D graphics;
 	
+	/**
+	 * A constructor that builds the ImageConfigTwo object.
+	 */
 	public ImageConfigTwo(){
 		setup();
+		setMinPos(100);
 	}
 	
 	public void setup() {
@@ -33,11 +38,6 @@ public class ImageConfigTwo implements Configurable {
 		return font;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see ie.gmit.sw.wordcloud.init.Configurable#setFont(java.awt.Font)
-	 * Useful for overriding font configuration
-	 */
 	public void setFont(Font font) {
 		this.font = font;
 	}
@@ -48,6 +48,14 @@ public class ImageConfigTwo implements Configurable {
 	
 	public BufferedImage getImage(){
 		return this.image;
+	}
+	
+	public int getMinPos() {
+		return this.minPos;
+	}
+	
+	public void setMinPos(int px) {
+		this.minPos = px;
 	}
 
 	public int getMaxXPos() {

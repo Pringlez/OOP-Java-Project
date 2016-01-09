@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 import ie.gmit.sw.wordcloud.init.Configurable;
 
 /**  
-* ImageGenerator.java - a class that generates the image from a file or URL.
+* ImageGenerator.java - A class that generates the image from the parsed words of a file or URL
 * @author John Walsh
 * @version 1.0.
 */
@@ -26,16 +26,27 @@ public class ImageGenerator {
 	private List<WordConfig> wordConfigList = new ArrayList<WordConfig>();
 	private List<Shape> shapesList = new ArrayList<Shape>();
 
+	/**
+	 * A constructor that builds the ImageGenerator object.
+	 * @param config The image configuration of type Configurable.
+	 * @param wordFrequencyMap The map containing word frequencies.
+	 * @param maxWords The maximum amount of words to be rendered on the generated image.
+	 * @param outputFileName The outputted file name for the generated image.
+	 * @throws Exception This is thrown when an unexpected error has occurred.
+	 */
 	public ImageGenerator(Configurable config, Map<String, Integer> wordFrequencyMap, int maxWords, String outputFileName) throws Exception {
 		setConfig(config);
 		sortFrequencies(wordFrequencyMap);
 		generateImage(wordConfigList, maxWords, outputFileName);
 	}
 	
-	/*
-	 * Implementation generateImage, takes a List of configured words
-	 * and max amount of words to be taken from that list to populate
-	 * the image being created
+	/**
+	 * This method takes a List of configured words, max amount of words
+	 * and output file name to be used to generate the image.
+	 * @param wordConfigList The list of words with their configuration.
+	 * @param maxWords The maximum amount of words to be rendered on the generated image.
+	 * @param outputFileName The outputted file name for the generated image.
+	 * @return boolean
 	 */
 	public boolean generateImage(List<WordConfig> wordConfigList, int maxWords, String outputFileName) {
 		try {
@@ -60,8 +71,8 @@ public class ImageGenerator {
 					    	if(!shapesList.isEmpty()){
 						    	for(Shape shapeTest : shapesList){
 						    		if(checkShapeIntersect(shape, shapeTest)){
-						    			wordConfig.setPosX(posGenerator.getRandomPos(getConfig().getMaxXPos()));
-						    			wordConfig.setPosY(posGenerator.getRandomPos(getConfig().getMaxYPos()));
+						    			wordConfig.setPosX(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxXPos()));
+						    			wordConfig.setPosY(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxYPos()));
 						    			shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
 						    			wordCollisions++;
 						    			i--;
@@ -72,8 +83,6 @@ public class ImageGenerator {
 				    	
 				    	shapesList.add(shape);
 				    	getConfig().getGraphics().fill(shape);
-				    	
-				    	//getConfig().getGraphics().drawString(wordConfig.getWord(), wordConfig.getPosX(), wordConfig.getPosY());
 		    		}
 		    		
 		    		wordCount++;
@@ -97,15 +106,21 @@ public class ImageGenerator {
 		}
 	}
 	
-	public boolean sortFrequencies(Map<String, Integer> wordFrequency){
+	/**
+	 * This method takes a List of configured words, max amount of words
+	 * and output file name to be used to generate the image.
+	 * @param wordFrequencyMap The map containing word frequencies.
+	 * @return boolean
+	 */
+	public boolean sortFrequencies(Map<String, Integer> wordFrequencyMap){
 		
 		int defaultFontSize = 50;
 		PositionGenerator posGenerator = new PositionGenerator();
 		
 		try {
-			for (Entry<String, Integer> pair : wordFrequency.entrySet()) { 
+			for (Entry<String, Integer> pair : wordFrequencyMap.entrySet()) { 
 				if(!pair.getKey().equals("")){
-			    	this.wordConfigList.add(new WordConfig(posGenerator.getRandomPos(getConfig().getMaxXPos()), posGenerator.getRandomPos(getConfig().getMaxYPos()), pair.getKey(), defaultFontSize, pair.getValue(), pair.getKey().length()));
+			    	this.wordConfigList.add(new WordConfig(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxXPos()), posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxYPos()), pair.getKey(), defaultFontSize, pair.getValue(), pair.getKey().length()));
 				}
 		    }
 			
@@ -156,16 +171,31 @@ public class ImageGenerator {
 		}
 	}
 	
+	/**
+	 * This method takes two shapes and compare them to see if they intersect each other.
+	 * @param shapeA The shape to compare against the other.
+	 * @param shapeB The shape to compare against the other.
+	 * @return boolean
+	 */
 	private boolean checkShapeIntersect(Shape shapeA, Shape shapeB) {
 	   Area areaA = new Area(shapeA);
 	   areaA.intersect(new Area(shapeB));
 	   return !areaA.isEmpty();
 	}
 
+	/**
+	 * This method gets the image configuration of type Configurable.
+	 * @return Configurable
+	 */
 	public Configurable getConfig() {
 		return config;
 	}
 
+	/**
+	 * This method sets the image configuration of type Configurable.
+	 * @param config The image configuration of type Configurable.
+	 * @throws Exception This is thrown when an unexpected error has occurred.
+	 */
 	public void setConfig(Configurable config) throws Exception {
 		if(config == null) throw new Exception("Error: Invalid Configuration");
 		

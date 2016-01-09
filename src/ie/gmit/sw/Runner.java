@@ -4,7 +4,7 @@ import ie.gmit.sw.wordcloud.*;
 import ie.gmit.sw.gui.*;
 
 /**
- * Runner.java - a class that tests the word cloud api
+ * Runner.java - A class that tests the word cloud API.
  * @author  John Walsh
  * @version 1.0.
  */

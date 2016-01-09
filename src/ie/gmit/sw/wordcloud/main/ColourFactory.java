@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.util.Random;
 
 /**  
-* ColourFactory.java - a class that generates and returns an object
-* of type Colour
+* ColourFactory.java - A class that generates and returns an object of type Colour
 * @author John Walsh
 * @version 1.0.
 */
@@ -14,6 +13,10 @@ public class ColourFactory {
 	public ColourFactory() {
 	}
 	
+	/**
+	 * This method generates a new object of type Colour.
+	 * @return Color
+	 */
 	public Color getRandomColor(){
 		
 		Random gen = new Random(System.nanoTime());

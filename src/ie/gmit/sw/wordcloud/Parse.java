@@ -11,8 +11,8 @@ import java.util.Map;
 import ie.gmit.sw.wordcloud.main.WordCloud;
 
 /**  
-* Parse.java - a abstract class that contains variables and methods
-* shared between different types of text parsers.
+* Parse.java - An abstract class that contains variables and methods
+* shared between different types of text parsers
 * @author John Walsh
 * @version 1.0 
 * @see Parsable
@@ -25,6 +25,11 @@ public abstract class Parse implements Parsable {
 	public Parse() {
 	}
 
+	/**
+	 * A constructor that builds the Parse object.
+	 * @param stopWordsPath The location to the stop words file.
+	 * @throws Exception This is thrown when an unexpected error has occurred.
+	 */
 	public Parse(String stopWordsPath) throws Exception{
 		setStopWords(new ArrayList<String>());
 		setWordFrequencyMap(new HashMap<String, Integer>());
@@ -34,7 +39,7 @@ public abstract class Parse implements Parsable {
 	/**
 	 * This method is used to configure / set the words to be ignored
 	 * by the parsing application.
-	 * @param path is the location to the file to be parsed
+	 * @param path The location to the file to be parsed.
 	 */
 	public void setStopWords(String path) {
 		
@@ -55,9 +60,11 @@ public abstract class Parse implements Parsable {
 	}
 	
 	/**
-	 * This method checks if the word passed is not in the stop words
+	 * This method checks if the word passed is in the stop words.
 	 * list, if so it will be ignored by the application.
-	 * @param word is the word to be stored and used in image generation
+	 * If the word is not in the stop words list it will be added to
+	 * the image generator map.
+	 * @param word The word to be stored and used in image generation.
 	 */
 	public void addWord(String word){
 		if(!getStopWords().contains(word)){
@@ -74,10 +81,10 @@ public abstract class Parse implements Parsable {
 	
 	/**
 	 * This method initializes / creates the word cloud image.
-	 * @param imageOption the option controlling image configuration - 0, 1 and 2 options available
-	 * @param maxWords the maximum amount of words to be rendered on the generated image
-	 * @param outputFileName the outputted file name for the generated image
-     * @throws Exception is thrown when an unexpected error has occurred
+	 * @param imageOption The option controlling image configuration - 0, 1 and 2 options available.
+	 * @param maxWords The maximum amount of words to be rendered on the generated image.
+	 * @param outputFileName The outputted file name for the generated image.
+     * @throws Exception This is thrown when an unexpected error has occurred.
 	 */
 	public void createWordCloud(int imageOption, int maxWords, String outputFileName) throws Exception {
 		WordCloud wordC = new WordCloud(getWordFrequencyMap());
@@ -94,8 +101,8 @@ public abstract class Parse implements Parsable {
 
 	/**
 	 * This method sets the stop words list.
-	 * @param stopWords is the list containing the words to be ignored when parsing files or URL
-     * @throws Exception is thrown when an unexpected error has occurred
+	 * @param stopWords The list containing the words to be ignored when parsing files or URL.
+     * @throws Exception This is thrown when an unexpected error has occurred.
 	 */
 	public void setStopWords(List<String> stopWords) throws Exception {
 		if(stopWords == null) throw new Exception("Error: Invalid Stop Words List");
@@ -113,8 +120,8 @@ public abstract class Parse implements Parsable {
 
 	/**
 	 * This method sets the word frequency map.
-	 * @param wordFrequencyMap is the map containing word frequencies
-	 * @throws Exception is thrown when an unexpected error has occurred
+	 * @param wordFrequencyMap The map containing word frequencies.
+	 * @throws Exception This is thrown when an unexpected error has occurred.
 	 */
 	public void setWordFrequencyMap(Map<String, Integer> wordFrequencyMap) throws Exception {
 		if(wordFrequencyMap == null) throw new Exception("Error: Invalid Word Frequency Map");

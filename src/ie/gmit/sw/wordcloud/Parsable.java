@@ -1,7 +1,7 @@
 package ie.gmit.sw.wordcloud;
 
 /**  
-* Parsable.java - an interface of type parsable
+* Parsable.java - An interface of type parsable
 * @author John Walsh
 * @version 1.0 
 */

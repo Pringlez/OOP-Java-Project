@@ -21,11 +21,11 @@ public class PositionGeneratorTest {
 	
 	@Test
 	public void validPosition() throws Exception {
-		assertNotNull(posGenerator.getRandomPos(500));
+		assertNotNull(posGenerator.getRandomPos(100 ,500));
 	}
 	
 	@Test(expected=Exception.class)
 	public void nullWordFrequencyMap() throws Exception {
-		assertNull(posGenerator.getRandomPos(0));
+		assertNull(posGenerator.getRandomPos(100 ,0));
 	}
 }
