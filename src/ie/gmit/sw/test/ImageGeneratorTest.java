@@ -3,7 +3,6 @@ package ie.gmit.sw.test;
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import ie.gmit.sw.wordcloud.main.*;
@@ -15,7 +14,7 @@ public class ImageGeneratorTest {
 	
 	@Before
 	public void setup() throws Exception {
-		imageGenerator = new ImageGenerator(new ImageConfigOne(), new HashMap<String, Integer>(), 35, "testfilename");
+		imageGenerator = new ImageGenerator(new ImageConfigOne(), new HashMap<String, Integer>());
 	}
 	
 	@After
@@ -25,7 +24,7 @@ public class ImageGeneratorTest {
 	
 	@Test
 	public void validGenerateImage() throws Exception {
-		assertNotNull(imageGenerator.generateImage(new ArrayList<WordConfig>(), 35, "testfilename"));
+		assertNotNull(imageGenerator.generateImage(35, "testfilename"));
 	}
 	
 	@Test

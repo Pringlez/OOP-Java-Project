@@ -25,83 +25,86 @@ public class ImageGenerator {
 	private Configurable config;
 	private List<WordConfig> wordConfigList = new ArrayList<WordConfig>();
 	private List<Shape> shapesList = new ArrayList<Shape>();
-
+	
+	private boolean clearToGenerate = false;
+	
 	/**
 	 * A constructor that builds the ImageGenerator object.
 	 * @param config The image configuration of type Configurable.
 	 * @param wordFrequencyMap The map containing word frequencies.
-	 * @param maxWords The maximum amount of words to be rendered on the generated image.
-	 * @param outputFileName The outputted file name for the generated image.
 	 * @throws Exception This is thrown when an unexpected error has occurred.
 	 */
-	public ImageGenerator(Configurable config, Map<String, Integer> wordFrequencyMap, int maxWords, String outputFileName) throws Exception {
+	public ImageGenerator(Configurable config, Map<String, Integer> wordFrequencyMap) throws Exception {
 		setConfig(config);
-		sortFrequencies(wordFrequencyMap);
-		generateImage(wordConfigList, maxWords, outputFileName);
+		clearToGenerate = sortFrequencies(wordFrequencyMap);
 	}
 	
 	/**
 	 * This method takes a List of configured words, max amount of words
 	 * and output file name to be used to generate the image.
-	 * @param wordConfigList The list of words with their configuration.
 	 * @param maxWords The maximum amount of words to be rendered on the generated image.
 	 * @param outputFileName The outputted file name for the generated image.
 	 * @return boolean
 	 */
-	public boolean generateImage(List<WordConfig> wordConfigList, int maxWords, String outputFileName) {
-		try {
-		    ColourFactory colFactory = new ColourFactory();
-		    PositionGenerator posGenerator = new PositionGenerator();
-		    int wordCount = 0;
-		    int wordCollisions = 0;
-			
-		    for(WordConfig wordConfig : this.wordConfigList) {
-		    	if(wordCount < maxWords){
-		    		if(!wordConfig.getWord().equals("")){
-			    		
-		    			getConfig().getGraphics().setColor(colFactory.getRandomColor());
-		    			getConfig().getGraphics().setFont(new Font(Font.SANS_SERIF, Font.BOLD, wordConfig.getFontSize()));
-		    			
-			    		GlyphVector vect = getConfig().getGraphics().getFont().createGlyphVector(getConfig().getGraphics().getFontRenderContext(), wordConfig.getWord());
-			    		
-			    		Shape shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
-			    		//getConfig().getGraphics().rotate(Math.toRadians(45));
-				    	
-				    	for(int i = 0; i < 1; i++){
-					    	if(!shapesList.isEmpty()){
-						    	for(Shape shapeTest : shapesList){
-						    		if(checkShapeIntersect(shape, shapeTest)){
-						    			wordConfig.setPosX(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxXPos()));
-						    			wordConfig.setPosY(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxYPos()));
-						    			shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
-						    			wordCollisions++;
-						    			i--;
+	public boolean generateImage(int maxWords, String outputFileName) {
+		if(clearToGenerate){
+			try {
+			    ColourFactory colFactory = new ColourFactory();
+			    PositionGenerator posGenerator = new PositionGenerator();
+			    int wordCount = 0;
+			    int wordCollisions = 0;
+				
+			    for(WordConfig wordConfig : this.wordConfigList) {
+			    	if(wordCount < maxWords){
+			    		if(!wordConfig.getWord().equals("")){
+				    		
+			    			getConfig().getGraphics().setColor(colFactory.getRandomColor());
+			    			getConfig().getGraphics().setFont(new Font(Font.SANS_SERIF, Font.BOLD, wordConfig.getFontSize()));
+			    			
+				    		GlyphVector vect = getConfig().getGraphics().getFont().createGlyphVector(getConfig().getGraphics().getFontRenderContext(), wordConfig.getWord());
+				    		
+				    		Shape shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
+				    		//getConfig().getGraphics().rotate(Math.toRadians(45));
+					    	
+					    	for(int i = 0; i < 1; i++){
+						    	if(!shapesList.isEmpty()){
+							    	for(Shape shapeTest : shapesList){
+							    		if(checkShapeIntersect(shape, shapeTest)){
+							    			wordConfig.setPosX(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxXPos()));
+							    			wordConfig.setPosY(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxYPos()));
+							    			shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
+							    			wordCollisions++;
+							    			i--;
+							    		}
 						    		}
-					    		}
+						    	}
 					    	}
-				    	}
-				    	
-				    	shapesList.add(shape);
-				    	getConfig().getGraphics().fill(shape);
-		    		}
-		    		
-		    		wordCount++;
-		    	}
-		    	else{
-		    		break;
-		    	}
-		    }
-		    
-		    getConfig().getGraphics().dispose();
-		    
-		    ImageIO.write(getConfig().getImage(), "png", new File(outputFileName + ".png"));
-		    System.out.println("Image Generated! - Word Collisions: " + wordCollisions);
-		    
-		    return true;
+					    	
+					    	shapesList.add(shape);
+					    	getConfig().getGraphics().fill(shape);
+			    		}
+			    		
+			    		wordCount++;
+			    	}
+			    	else{
+			    		break;
+			    	}
+			    }
+			    
+			    getConfig().getGraphics().dispose();
+			    
+			    ImageIO.write(getConfig().getImage(), "png", new File(outputFileName + ".png"));
+			    System.out.println("Image Generated! - Word Collisions: " + wordCollisions);
+			    
+			    return true;
+			}
+			catch(Exception e){
+				System.out.println("Something went wrong! - " + e);
+				e.printStackTrace();
+				return false;
+			}
 		}
-		catch(Exception e){
-			System.out.println("Something went wrong! - " + e);
-			e.printStackTrace();
+		else{
 			return false;
 		}
 	}
@@ -115,6 +118,7 @@ public class ImageGenerator {
 	public boolean sortFrequencies(Map<String, Integer> wordFrequencyMap){
 		
 		int defaultFontSize = 50;
+		clearToGenerate = false;
 		PositionGenerator posGenerator = new PositionGenerator();
 		
 		try {

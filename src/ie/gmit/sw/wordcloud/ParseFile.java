@@ -29,8 +29,9 @@ public class ParseFile extends Parse {
 	 * @param path The location to the file to be parsed.
 	 * @param imageOption The option controlling image configuration - 0, 1 and 2 options available.
 	 * @param maxWords The maximum amount of words to be rendered on the generated image.
+	 * @return boolean
 	 */
-	public void parseWords(String path, int imageOption, int maxWords) {
+	public boolean parseWords(String path, int imageOption, int maxWords) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 	        String inputLine = br.readLine();
@@ -49,11 +50,12 @@ public class ParseFile extends Parse {
             
             System.out.println("File Parse Task Complete!");
             
-            createWordCloud(imageOption, maxWords, getOutputFileName());
+            return createWordCloud(imageOption, maxWords, getOutputFileName());
         }
 		catch(Exception e){
 			System.out.println("Error File - " + e);
 			e.printStackTrace();
+			return false;
 		}
 	}
 

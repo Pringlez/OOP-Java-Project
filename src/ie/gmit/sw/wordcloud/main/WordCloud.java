@@ -26,9 +26,10 @@ public class WordCloud {
 	 * @param imageOption The option controlling image configuration - 0, 1 and 2 options available.
 	 * @param maxWords The maximum amount of words to be rendered on the generated image.
 	 * @param outputFileName The outputted file name for the generated image.
+	 * @return boolean
 	 * @throws Exception This is thrown when an unexpected error has occurred.
 	 */
-	public void configWordCloud(int imageOption, int maxWords, String outputFileName) throws Exception {
+	public boolean configWordCloud(int imageOption, int maxWords, String outputFileName) throws Exception {
 		
 		Configurable config;
 		
@@ -47,6 +48,8 @@ public class WordCloud {
 			break;
 		}
 		
-		new ImageGenerator(config, wordFrequencyMap, maxWords, outputFileName);
+		ImageGenerator newGenImg = new ImageGenerator(config, wordFrequencyMap);
+		
+		return newGenImg.generateImage(maxWords, outputFileName);
 	}
 }

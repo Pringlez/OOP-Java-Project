@@ -6,5 +6,5 @@ package ie.gmit.sw.wordcloud;
 * @version 1.0 
 */
 public interface Parsable {
-	public void parseWords(String string, int int1, int int2);
+	public boolean parseWords(String string, int int1, int int2);
 }

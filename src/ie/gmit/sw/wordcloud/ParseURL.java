@@ -27,11 +27,12 @@ public class ParseURL extends Parse {
 	/**
 	 * This method is used to configure / set the words to be ignored
 	 * by the parsing application.
-	 * @param url The URL the parser will attempt to parse
-	 * @param imageOption The image configuration option
-	 * @param maxWords The max words the parser will render in the image
+	 * @param url The URL the parser will attempt to parse.
+	 * @param imageOption The image configuration option.
+	 * @param maxWords The max words the parser will render in the image.
+	 * @return boolean
 	 */
-	public void parseWords(String url, int imageOption, int maxWords) {
+	public boolean parseWords(String url, int imageOption, int maxWords) {
 		try {
 			Document doc = Jsoup.connect(url).get();
 			String text = doc.body().text();
@@ -43,10 +44,12 @@ public class ParseURL extends Parse {
         
 	        System.out.println("URL Parse Task Complete!");
 	        
-	        createWordCloud(imageOption, maxWords, getOutputFileName());
+	        return createWordCloud(imageOption, maxWords, getOutputFileName());
 		}
 		catch(Exception e){
 			System.out.println("Error URL - " + e);
+			e.printStackTrace();
+			return false;
 		}
 	}
 	

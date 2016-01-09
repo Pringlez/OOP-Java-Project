@@ -12,9 +12,6 @@ public class Runner {
 
 	public static void main(String[] args) throws Exception {
 		
-		//new ParseFile().parseWords("WarAndPeace.txt", 0, 35);
-		//new ParseURL().parseWords("http://example.com/", 0, 35);
-		
 		Parse app;
 		
 		app = new ParseFile("stopwords.txt", "fileparse");
@@ -23,6 +20,6 @@ public class Runner {
 		app = new ParseURL("stopwords.txt", "urlparse");
 		app.parseWords("http://www.bbc.com/news", 0, 50);
 		
-		//new WordCloudGUI();
+		new WordCloudGUI();
 	}
 }

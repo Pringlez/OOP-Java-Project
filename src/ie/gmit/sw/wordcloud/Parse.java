@@ -84,11 +84,12 @@ public abstract class Parse implements Parsable {
 	 * @param imageOption The option controlling image configuration - 0, 1 and 2 options available.
 	 * @param maxWords The maximum amount of words to be rendered on the generated image.
 	 * @param outputFileName The outputted file name for the generated image.
+	 * @return boolean
      * @throws Exception This is thrown when an unexpected error has occurred.
 	 */
-	public void createWordCloud(int imageOption, int maxWords, String outputFileName) throws Exception {
+	public boolean createWordCloud(int imageOption, int maxWords, String outputFileName) throws Exception {
 		WordCloud wordC = new WordCloud(getWordFrequencyMap());
-		wordC.configWordCloud(imageOption, maxWords, outputFileName);
+		return wordC.configWordCloud(imageOption, maxWords, outputFileName);
 	}
 
 	/**
