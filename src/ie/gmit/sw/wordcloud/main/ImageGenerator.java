@@ -47,6 +47,7 @@ public class ImageGenerator {
 	 * @return boolean
 	 */
 	public boolean generateImage(int maxWords, String outputFileName) {
+		// If word frequencies have been sorted then continue 
 		if(clearToGenerate){
 			try {
 			    ColourFactory colFactory = new ColourFactory();
@@ -58,6 +59,7 @@ public class ImageGenerator {
 			    	if(wordCount < maxWords){
 			    		if(!wordConfig.getWord().equals("")){
 				    		
+			    			// Generating a shape from the configuration, font type, font size and default shape position set
 			    			getConfig().getGraphics().setColor(colFactory.getRandomColor());
 			    			getConfig().getGraphics().setFont(new Font(Font.SANS_SERIF, Font.BOLD, wordConfig.getFontSize()));
 			    			
@@ -66,9 +68,11 @@ public class ImageGenerator {
 				    		Shape shape = vect.getOutline(wordConfig.getPosX(), wordConfig.getPosY());
 				    		//getConfig().getGraphics().rotate(Math.toRadians(45));
 					    	
+				    		// Checking the shape against previous generated shapes and their positions
 					    	for(int i = 0; i < 1; i++){
 						    	if(!shapesList.isEmpty()){
 							    	for(Shape shapeTest : shapesList){
+							    		// If shape intersects with another shape then generate a new position until a good position is found
 							    		if(checkShapeIntersect(shape, shapeTest)){
 							    			wordConfig.setPosX(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxXPos()));
 							    			wordConfig.setPosY(posGenerator.getRandomPos(getConfig().getMinPos(), getConfig().getMaxYPos()));
@@ -80,6 +84,7 @@ public class ImageGenerator {
 						    	}
 					    	}
 					    	
+					    	// Adding shape to list and applying shape to image
 					    	shapesList.add(shape);
 					    	getConfig().getGraphics().fill(shape);
 			    		}
@@ -93,8 +98,9 @@ public class ImageGenerator {
 			    
 			    getConfig().getGraphics().dispose();
 			    
+			    // Writing out the image to file with name specified from user
 			    ImageIO.write(getConfig().getImage(), "png", new File(outputFileName + ".png"));
-			    System.out.println("Image Generated! - Word Collisions: " + wordCollisions);
+			    System.out.println("Image Generated! - Word Collisions Avoided: " + wordCollisions + " - Filename: " + outputFileName + ".png");
 			    
 			    return true;
 			}
@@ -121,6 +127,7 @@ public class ImageGenerator {
 		clearToGenerate = false;
 		PositionGenerator posGenerator = new PositionGenerator();
 		
+		// Add the words from the word frequency map to the word config list with generated positions and default font size
 		try {
 			for (Entry<String, Integer> pair : wordFrequencyMap.entrySet()) { 
 				if(!pair.getKey().equals("")){
@@ -139,10 +146,12 @@ public class ImageGenerator {
 				}
 			};
 			
+			// Sorting the coolection
 			Collections.sort(this.wordConfigList, freqComparator);
 			
 			int count = 0;
 			
+			// Looping through the new list of words to set their correct font sizes
 			for(WordConfig wordConfig : this.wordConfigList) {
 				
 				if(count == 0){

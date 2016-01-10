@@ -34,15 +34,17 @@ public class ParseURL extends Parse {
 	 */
 	public boolean parseWords(String url, int imageOption, int maxWords) {
 		try {
+			// Using jsoup to process the text from the web page
 			Document doc = Jsoup.connect(url).get();
 			String text = doc.body().text();
 			
 			String[] words = text.split(" ");
             
+			// Add word, setting to lowercase
             for (int i = 0; i < words.length; i++)
             	addWord(words[i].toLowerCase());
         
-	        System.out.println("URL Parse Task Complete!");
+	        System.out.println("URL Parsing Complete!");
 	        
 	        return createWordCloud(imageOption, maxWords, getOutputFileName());
 		}

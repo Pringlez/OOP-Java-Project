@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 /**  
 * ImageConfigOne.java - A class that contains a configuration for an image
-* The dimensions for this image configuration is 1200 x 1000
+* The dimensions for this image configuration is 800 x 600
 * @author John Walsh
 * @version 1.0 
 * @see Configurable
@@ -30,6 +30,7 @@ public class ImageConfigOne implements Configurable {
 	}
 	
 	public void setup() {
+		// Generating a new buffered image, with class specific variables
 		this.image = new BufferedImage(maxXPos, maxYPos, BufferedImage.TYPE_4BYTE_ABGR);
 		this.graphics = getImage().createGraphics();
 	}

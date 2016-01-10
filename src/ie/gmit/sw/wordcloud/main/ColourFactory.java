@@ -19,6 +19,7 @@ public class ColourFactory {
 	 */
 	public Color getRandomColor(){
 		
+		// Getting a random number, returning a colour
 		Random gen = new Random(System.nanoTime());
 		int num = gen.nextInt((6 - 0) + 1) + 0;
 	    Color randomColor;

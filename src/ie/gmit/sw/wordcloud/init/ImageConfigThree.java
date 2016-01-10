@@ -30,6 +30,7 @@ public class ImageConfigThree implements Configurable {
 	}
 	
 	public void setup() {
+		// Generating a new buffered image, with class specific variables
 		this.image = new BufferedImage(maxXPos, maxYPos, BufferedImage.TYPE_4BYTE_ABGR);
 		this.graphics = getImage().createGraphics();
 	}

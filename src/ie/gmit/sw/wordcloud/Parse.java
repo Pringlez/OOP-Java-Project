@@ -49,6 +49,7 @@ public abstract class Parse implements Parsable {
 		try {
 			reader = new BufferedReader(new FileReader(path));
 			
+			// Reading file line by line, add the words to the list
 			while ((line = reader.readLine()) != null)
 			    this.stopWords.add(line);
 			
@@ -56,6 +57,7 @@ public abstract class Parse implements Parsable {
 		} 
 		catch (IOException e) {
 			System.out.println("Error - " + e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -67,11 +69,14 @@ public abstract class Parse implements Parsable {
 	 * @param word The word to be stored and used in image generation.
 	 */
 	public void addWord(String word){
+		// Checking if the word is contained in the stop words list
 		if(!getStopWords().contains(word)){
+			// If word is not found in the frequency map, create new key / value pair
             if (getWordFrequencyMap().get(word) == null) {
             	getWordFrequencyMap().put(word, 1);
             } 
             else {
+            	// Else increment value of key already in map
                 int newValue = Integer.valueOf(String.valueOf(getWordFrequencyMap().get(word)));
                 newValue++;
                 getWordFrequencyMap().put(word, newValue);

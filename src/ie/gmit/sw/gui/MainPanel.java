@@ -82,11 +82,11 @@ public class MainPanel extends JPanel {
 		optionsPanel.setBorder(panelOptionsTitle);
 		
 		JLabel lblStatus = new JLabel("Status:");
-		lblStatus.setBounds(515, 15, 60, 14);
+		lblStatus.setBounds(485, 15, 60, 14);
 		optionsPanel.add(lblStatus);
 		
 		txtStatus = new JLabel("N/A");
-		txtStatus.setBounds(570, 15, 107, 14);
+		txtStatus.setBounds(550, 15, 120, 14);
 		optionsPanel.add(txtStatus);
 		
 		JLabel lblParseType = new JLabel("Parse Type:");
@@ -243,7 +243,7 @@ public class MainPanel extends JPanel {
 		resultImage = new ImageIcon();
 		resultImageLabel = new JLabel(resultImage);
 
-		resultImageLabel.setBounds(20, 14, 360, 360);
+		resultImageLabel.setBounds(20, 14, 360, 350);
 		resultImageLabel.setVisible(true);
         parseResultPanel.add(resultImageLabel);
 	}
@@ -272,7 +272,10 @@ public class MainPanel extends JPanel {
 					if(file.exists()){
 						fileName = (outputFileName.getText() + "_" + ++fileCount);
 					}
-				} catch(Exception e){}
+				} catch(Exception e){
+					e.printStackTrace();
+					txtStatus.setText("File Error!");
+				}
 				
 				if(parseFilePanel.isVisible()){
 					textField = textFieldFile.getText();
@@ -281,9 +284,11 @@ public class MainPanel extends JPanel {
 							app = new ParseFile(stopWordsFile.getText(), fileName);
 							if(app.parseWords(textField, imageOption, Integer.parseInt(maxWords.getText()))){
 								makeNewResultPanel();
+								txtStatus.setText("Task Complete!");
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
+							txtStatus.setText("File Error!");
 						}
 					}
 					else{
@@ -294,18 +299,20 @@ public class MainPanel extends JPanel {
 					textField = textFieldURL.getText();
 					if(!textField.isEmpty() && textField != null){
 						try {
-							if(textField.substring(0, 7).equals("https://")){
-								textField = "http://" + textField.substring(9, textField.length() - 1);
+							if(textField.substring(0, 8).equals("https://")){
+								textField = "http://" + textField.substring(8, textField.length());
 							}
-							else if(!textField.substring(0, 8).equals("http://")){
+							else if(!textField.substring(0, 7).equals("http://")){
 								textField = "http://" + textField;
 							}
 							app = new ParseURL(stopWordsFile.getText(), fileName);
 							if(app.parseWords(textField, imageOption, Integer.parseInt(maxWords.getText()))){
 								makeNewResultPanel();
+								txtStatus.setText("Task Complete!");
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
+							txtStatus.setText("URL Error!");
 						}
 					}
 					else{

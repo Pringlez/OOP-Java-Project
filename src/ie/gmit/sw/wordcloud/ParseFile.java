@@ -36,10 +36,12 @@ public class ParseFile extends Parse {
 			BufferedReader br = new BufferedReader(new FileReader(path));
 	        String inputLine = br.readLine();
 
+	        // Loop while input has another line to process
             while (inputLine != null) {
             	
                 String[] words = inputLine.split(" ");
                 
+                // Add word, setting to lowercase
                 for (int i = 0; i < words.length; i++)
                 	addWord(words[i].toLowerCase());
                 
@@ -48,7 +50,7 @@ public class ParseFile extends Parse {
             
             br.close();
             
-            System.out.println("File Parse Task Complete!");
+            System.out.println("File Parsing Complete!");
             
             return createWordCloud(imageOption, maxWords, getOutputFileName());
         }

@@ -1,6 +1,5 @@
 package ie.gmit.sw;
 
-import ie.gmit.sw.wordcloud.*;
 import ie.gmit.sw.gui.*;
 
 /**
@@ -11,15 +10,6 @@ import ie.gmit.sw.gui.*;
 public class Runner {
 
 	public static void main(String[] args) throws Exception {
-		
-		Parse app;
-		
-		app = new ParseFile("stopwords.txt", "fileparse");
-		app.parseWords("WarAndPeace.txt", 0, 50);
-		
-		app = new ParseURL("stopwords.txt", "urlparse");
-		app.parseWords("http://www.bbc.com/news", 0, 50);
-		
 		new WordCloudGUI();
 	}
 }
