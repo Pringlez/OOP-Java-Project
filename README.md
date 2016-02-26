@@ -51,3 +51,9 @@ app.parseWords("http://www.bbc.com/news", 0, 50);
 * The first argument takes input from either the text file or URL, depending on what class parser you instantiate. 
 * The second argument allows you to select the image option, 0 - for image size of 800 x 600, 1 - for 1000 x 800, 2 - for 1200 x 1000.
 * The third argument allows you to specify the maximum amount of words to be used in the image generation.
+
+Design
+------
+Below is the design image showing the relationships between the different classes. Please excuse the sloppy drawing :)
+
+![alt text](/design.jpg "Java Design Image")
