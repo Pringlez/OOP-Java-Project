@@ -56,4 +56,4 @@ Design
 ------
 Below is the design image showing the relationships between the different classes. Please excuse the sloppy drawing :)
 
-![alt text](design.jpg "Java Design Image")
+![alt text](design.png "Java Design Image")
