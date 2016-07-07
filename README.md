@@ -3,8 +3,8 @@
 
 Project Details
 ---------------
-0. I've developed a GUI to demonstrate usage of the word cloud API, you can either parse a file or URL with this user interface. 
-0. The application will generate the images in the same directory as the wordcloud.jar file.
+0. I've developed a GUI to demonstrate usage of the word cloud API, you can either parse a text file or website URL with this user interface. 
+0. The application will generate the images in the same directory as the wordcloud.jar file, the application will also check if theres a file name conflict when generating the output file and will rename accordingly.
 0. Java docs are available if you need more information on specific classes or methods.
 0. The URL parser uses jsoup to parse the words from web pages, it can be found here (http://jsoup.org/).
 
